@@ -50,43 +50,41 @@
 			<li class="p-4 pb-2 text-xs tracking-wide opacity-60">Trending Posts</li>
 
 			{#each posts as post (post.permlink)}
-					<li class="list-row flex gap-3 border-b border-gray-200 p-3" on:click={() => handleListdetail(post.author, post.permlink)}>
-					<li class="list-row flex gap-3 border-b border-gray-200 p-3" on:click={handleListdetail(post.author, post.permlink)}>
-						<div>
-							{#if parseMetadata(post.json_metadata)?.image?.length > 0}
-								<!-- svelte-ignore a11y_img_redundant_alt -->
-								<img
-									class="size-10 rounded-box"
-									src={parseMetadata(post.json_metadata)?.image?.[0]
-										? 'https://images.hive.blog/256x512/' +
-											parseMetadata(post.json_metadata).image[0]
-										: 'https://images.hive.blog/u/' + post.author + '/avatar'}
-									alt="Post image"
-									on:error={(e: Event) => {
-										// (e.currentTarget.src = 'https://images.hive.blog/u/' + post.author + '/avatar')
-										(e.currentTarget as HTMLImageElement).src = 'https://images.hive.blog/u/' + post.author + '/avatar';
-									}}
-								/>
-							{:else}
-								<div
-									class="flex size-10 items-center justify-center rounded-box bg-gray-200 text-xs text-gray-500"
-								>
-									No image
-								</div>
-							{/if}
-						</div>
-
-						<div class="flex-1">
-							<div class="font-semibold">{post.title}</div>
-							<div class="text-xs font-semibold uppercase opacity-60">
-								{post.author}
+				<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<li class="list-row flex gap-3 border-b border-gray-200 p-3" on:click={() => handleListdetail(post.author, post.permlink)}>
+					<div>
+						{#if parseMetadata(post.json_metadata)?.image?.length > 0}
+							<!-- svelte-ignore a11y_img_redundant_alt -->
+							<img
+								class="size-10 rounded-box"
+								src={parseMetadata(post.json_metadata)?.image?.[0]
+									? 'https://images.hive.blog/256x512/' + parseMetadata(post.json_metadata).image[0]
+									: 'https://images.hive.blog/u/' + post.author + '/avatar'}
+								alt="Post image"
+								on:error={(e: Event) => {
+									(e.currentTarget as HTMLImageElement).src = 'https://images.hive.blog/u/' + post.author + '/avatar';
+								}}
+							/>
+						{:else}
+							<div
+								class="flex size-10 items-center justify-center rounded-box bg-gray-200 text-xs text-gray-500"
+							>
+								No image
 							</div>
-							<p class="mt-1 line-clamp-3 text-xs opacity-80">
-								{post.body.slice(0, 180)}...
-							</p>
+						{/if}
+					</div>
+
+					<div class="flex-1">
+						<div class="font-semibold">{post.title}</div>
+						<div class="text-xs font-semibold uppercase opacity-60">
+							{post.author}
 						</div>
-					</li>
-				{/key}
+						<p class="mt-1 line-clamp-3 text-xs opacity-80">
+							{post.body.slice(0, 180)}...
+						</p>
+					</div>
+				</li>
 			{/each}
 		</ul>
 	{/if}
